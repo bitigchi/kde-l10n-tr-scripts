@@ -17,11 +17,15 @@
 
 clear
 echo -e "KDE Çeviri Hazırlama Betiğine Hoş Geldiniz!\n"
-echo -e "Bu betik, depoya yazma yetkisi olan veya olmayan kullanıcılar için çeviri ortamını hazırlayacak.\nGerekli çeviri (PO) ve şablon dosyaları (POT) depolardan indirilecek, \nardından KDE 5 çevirisi için Lokalize proje dosyası oluşturulacak. \nKurulum, bazı yardımcı betikleri kopyaladıktan sonra Lokalize uygulamasını bu proje ile açacak.\n"
+echo -e "Bu betik, depoya yazma yetkisi olan veya olmayan kullanıcılar için çeviri"
+echo -e "ortamını hazırlayacak. Gerekli çeviri (PO) ve şablon dosyaları (POT)"
+echo -e "depolardan indirilecek, ardından KDE 6 çevirisi için Lokalize proje dosyası"
+echo -e "oluşturulacak. Kurulum, bazı yardımcı betikleri kopyaladıktan sonra Lokalize"
+echo -e "uygulamasını bu proje ile açacak.\n"
 echo -e "Herhangi bir anda Ctrl+C ile kurulumu iptal edebilirsiniz!\n"
 
 function checkMD5 {
-        rawGitHubLink="https://raw.githubusercontent.com/vgezer/translationTools/master/kdeProjectCreator"
+        rawGitHubLink="https://raw.githubusercontent.com/bitigchi/translationTools/master/kdeProjectCreator"
         file=$1
         online_md5="$(curl -sL $rawGitHubLink/$file | md5sum | cut -d ' ' -f 1)"
         local_md5="$(md5sum "$file" | cut -d ' ' -f 1)"
@@ -41,16 +45,18 @@ function checkMD5 {
 function checkCMD { # $1 -> komut, $2 -> görünen ad / paket adı
     if ! command -v $1 &> /dev/null
     then
-        echo "$2 bulunamadı, yükleniyor..."
+        echo "$2 bulunamadı, kuruluyor..."
         sudo apt install $2 -y
     fi
 }
 
-if [ -f "kde5_tr_trunk.lokalize" ]; then
-    echo -e "\n\e[31mUYARI: Daha önce kurulum yapmışsınız gibi görünüyor. Kuruluma devam etmek, daha önceki yaptığınız\n ancak göndermediğiniz çevirilerin üzerine yazabilir.\e[0m\n"
+if [ -f "kde6_tr_trunk.lokalize" ]; then
+    echo -e "\n\e[31mUYARI: Daha önce kurulum yapmışsınız gibi görünüyor. Kurulumu"
+    echo -e "sürdürmek, daha önceki yaptığınız; ancak göndermediğiniz çevirilerin"
+    echo -e "üzerine yazabilir.\e[0m\n"
 fi
 
-read -r -p "Kuruluma devam edilsin mi [eE]/hH? " cevap
+read -r -p "Kurulum sürdürülsün mü [eE]/hH? " cevap
 cevap=${cevap:-e}
 case "$cevap" in
     [hH]) 
@@ -60,7 +66,7 @@ case "$cevap" in
 esac
 
 
-read -r -p "En son sürüme sahip olup olmadığınız kontrol edilsin mi [eE]/hH? " cevap
+read -r -p "En son sürüme sahip olup olmadığınız denetlensin mi [eE]/hH? " cevap
 cevap=${cevap:-e}
 case "$cevap" in
     [eE]) 
@@ -79,9 +85,15 @@ case "$cevap" in
     *)
 esac
 
-echo "== KDE Yazma Yetkisi =="
-echo -e "KDE depolarına yazma yetkiniz yoksa, çevirileri posta listesine gönderirsiniz. Ancak varsa, yükleme işlemini kendiniz\n yapabilirsiniz. Ancak bunun için daha öncesinden Ortak SSH anahtarınızın (RSA) KDE sunucusuna yüklenmiş\n olması gerekir."
-echo -e "Yetkili bir kullanıcı iseniz, evet demeden önce ssh-keygen komutu ile anahtar oluşturduğunuzdan \n ve Ortak Anahtarı (pubkey) https://invent.kde.org/-/profile/keys adresine yüklediğinizden\n emin olun.\nYükleme işleminden sonra, anahtarınızın kullanılabilir olması 1 saati bulabilir. Bu durumda kurulum işlemine bir süre ara verin."
+echo "== KDE Yazma Yetkisi ==\n"
+echo -e "KDE depolarına yazma yetkiniz yoksa çevirileri posta listesine gönderirsiniz."
+echo -e "Ancak varsa kurulum işlemini kendiniz yapabilirsiniz. Ancak bunun için daha"
+echo -e "öncesinden Ortak SSH anahtarınızın (RSA) KDE sunucusuna yüklenmiş olması gerekir."
+echo -e "Yetkili bir kullanıcıysanız evet demeden önce ssh-keygen komutu ile anahtar"
+echo -e "oluşturduğunuzdan ve Ortak Anahtarı (pubkey)"
+echo -e "https://invent.kde.org/-/profile/keys adresine yüklediğinizden emin olun."
+echo -e "Yükleme işleminden sonra, anahtarınızın kullanılabilir olması 1 saati"
+echo -e "bulabilir. Bu durumda kurulum işlemine bir süre ara verin."
 svnOnEk="svn://anonsvn.kde.org"
 read -r -p "KDE Deposu'na yazma izniniz var mı? eE/[hH]? " cevap
 cevap=${cevap:-h}
@@ -93,41 +105,35 @@ case "$cevap" in
     *)
 esac
 
-echo "Betik, gerekli uygulamalara sahip olup olmadığınızı kontrol edecek."
-echo -e "Aşağıdaki komutlar, Debian (Ubuntu, Linux Mint vs.) dışı bir sistem kullanıyorsanız başarısız olacak.\nBu durumda Lokalize ve SVN (Subversion) kurulumunu kendiniz yapmalısınız!"
-echo "APT önbelleği güncelleniyor..."
+echo -e "Betik, gerekli uygulamalara sahip olup olmadığınızı denetleyecek."
+echo -e "Aşağıdaki komutlar, Debian (Ubuntu, Linux Mint vs.) dışı bir sistem"
+echo -e "kullanıyorsanız çalışmaz. Bu durumda Lokalize ve SVN (Subversion)"
+echo -e "kurulumuu kendiniz yapmalısınız!\n"
+echo -e "APT önbelleği güncelleniyor..."
 sudo apt update
 
 checkCMD lokalize krosspython
 checkCMD lokalize lokalize
 checkCMD svn subversion
 
+echo "KDE 6 Trunk Klonlanıyor..."
+svn co -q $svnOnEk/home/kde/trunk/l10n-kf6/tr/ kde6_tr_trunk
+echo "KDE 6 Stable Klonlanıyor..."
+svn co -q $svnOnEk/home/kde/branches/stable/l10n-kf6/tr/ kde6_tr_stable
+echo "KDE 6 Trunk Şablonları Klonlanıyor..."
+svn co -q $svnOnEk/home/kde/trunk/l10n-kf6/templates templates_kde6
 
-# KDE4 Libs'i klonla
-#echo "KDE 4 Trunk Klonlanıyor..."
-#svn co $svnOnEk/home/kde/trunk/l10n-kde4/tr/ kde4_tr_trunk
-
-# KDE5 trunk klonla
-echo "KDE 5 Trunk Klonlanıyor..."
-svn co -q $svnOnEk/home/kde/trunk/l10n-kf5/tr/ kde5_tr_trunk
-# KDE5 stable klonla
-echo "KDE 5 Stable Klonlanıyor..."
-svn co -q $svnOnEk/home/kde/branches/stable/l10n-kf5/tr/ kde5_tr_stable
-# KDE5 trunk şablonlarını klonla
-echo "KDE 5 Trunk Şablonları Klonlanıyor..."
-svn co -q $svnOnEk/home/kde/trunk/l10n-kf5/templates templates_kde5
-
-echo "KDE 5 Lokalize Projesi oluşturuluyor..."
+echo "KDE 6 Lokalize Projesi oluşturuluyor..."
 # Proje dosyasını yapılandır
-echo "[General]" >> kde5_tr_trunk.lokalize
-echo "BranchDir=kde5_tr_stable" >> kde5_tr_trunk.lokalize
-echo "LangCode=tr" >> kde5_tr_trunk.lokalize
-echo "PoBaseDir=kde5_tr_trunk" >> kde5_tr_trunk.lokalize
-echo "PotBaseDir=templates_kde5" >> kde5_tr_trunk.lokalize
-echo "ProjectID=KDE Türkçe" >> kde5_tr_trunk.lokalize
-echo "TargetLangCode=tr" >> kde5_tr_trunk.lokalize
+echo "[General]" >> kde6_tr_trunk.lokalize
+echo "BranchDir=kde6_tr_stable" >> kde6_tr_trunk.lokalize
+echo "LangCode=tr" >> kde6_tr_trunk.lokalize
+echo "PoBaseDir=kde6_tr_trunk" >> kde6_tr_trunk.lokalize
+echo "PotBaseDir=templates_kde6" >> kde6_tr_trunk.lokalize
+echo "ProjectID=KDE Türkçe" >> kde6_tr_trunk.lokalize
+echo "TargetLangCode=tr" >> kde6_tr_trunk.lokalize
 
-echo "Çeviride yardımcı olacak lokalize betikleri kopyalanıyor..."
+echo "Çeviride yardımcı olacak Lokalize betikleri kopyalanıyor..."
 
 
 # Lokalize betiklerini kopyala
@@ -137,18 +143,23 @@ mv embedded-google-translate.* lokalize-scripts
 
 
 # Lokalize'yi oluşturulan proje dosyası ile çalıştır
-echo "KDE Çeviri Ekibine Hoş Geldiniz! Herhangi bir sorunuzda kde-l10n-tr@kde.org adresine e-posta gönderebilirsiniz."
-echo "Kurulum tamamlandı. Bu betiği silebilir ve Lokalize uygulamasını açabilirsiniz... "
-read -r -p "Şimdi lokalize açılsın mı [eE]/hH? " cevap
+echo "KDE Çeviri Ekibine Hoş Geldiniz! Herhangi bir sorunuzda kde-l10n-tr@kde.org"
+echo "adresine e-posta gönderebilirsiniz."
+echo "Kurulum tamamlandı. Artık Lokalize uygulamasını açabilirsiniz... "
+read -r -p "Lokalize açılsın mı [eE]/hH? " cevap
 cevap=${cevap:-e}
 case "$cevap" in
     [eE]) 
-        echo "Enter'a bastığınızda Lokalize uygulaması otomatik olarak kde5_tr_trunk.lokalize projesini açacak."
+        echo "Enter'a bastığınızda Lokalize uygulaması otomatik olarak"
+        echo "kde6_tr_trunk.lokalize projesini açar."
         read -r -p "Çeviriye başlamadan önce ilk olarak 'Ayarlar -> Lokalize Uygulamasını Yapılandır -> Kimlik' bölümünden bilgilerinizi girmeyi unutmayın!"
-        lokalize --project kde5_tr_trunk.lokalize &> /dev/null &
+        lokalize --project kde6_tr_trunk.lokalize &> /dev/null &
         ;;
     *)
-        echo -e "Lokalize uygulamasını elle başlattıktan sonra bu klasörde oluşturulmuş kde5_tr_trunk.lokalize proje dosyasını açın.\nÇeviriye başlamadan önce ilk olarak 'Ayarlar -> Lokalize Uygulamasını Yapılandır -> Kimlik' bölümünden bilgilerinizi girmeyi unutmayın!"
+        echo -e "Lokalize uygulamasını elle başlattıktan sonra bu klasörde oluşturulmuş"
+        echo -e "kde6_tr_trunk.lokalize proje dosyasını açın. Çeviriye başlamadan önce"
+        echo -e "ilk olarak 'Ayarlar -> Lokalize Uygulamasını Yapılandır -> Kimlik'"
+        echo -e "bölümünden bilgilerinizi girmeyi unutmayın!"
         ;;
 esac
 
