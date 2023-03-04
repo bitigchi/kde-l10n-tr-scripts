@@ -85,15 +85,15 @@ case "$cevap" in
     *)
 esac
 
-echo "== KDE Yazma Yetkisi ==\n"
+echo -e "== KDE Yazma Yetkisi ==\n"
 echo -e "KDE depolarına yazma yetkiniz yoksa çevirileri posta listesine gönderirsiniz."
 echo -e "Ancak varsa kurulum işlemini kendiniz yapabilirsiniz. Ancak bunun için daha"
 echo -e "öncesinden Ortak SSH anahtarınızın (RSA) KDE sunucusuna yüklenmiş olması gerekir."
 echo -e "Yetkili bir kullanıcıysanız evet demeden önce ssh-keygen komutu ile anahtar"
 echo -e "oluşturduğunuzdan ve Ortak Anahtarı (pubkey)"
-echo -e "https://invent.kde.org/-/profile/keys adresine yüklediğinizden emin olun."
+echo -e "https://invent.kde.org/-/profile/keys adresine yüklediğinizden emin olun.\n"
 echo -e "Yükleme işleminden sonra, anahtarınızın kullanılabilir olması 1 saati"
-echo -e "bulabilir. Bu durumda kurulum işlemine bir süre ara verin."
+echo -e "bulabilir. Bu durumda kurulum işlemine bir süre ara verin.\n"
 svnOnEk="svn://anonsvn.kde.org"
 read -r -p "KDE Deposu'na yazma izniniz var mı? eE/[hH]? " cevap
 cevap=${cevap:-h}
@@ -116,17 +116,17 @@ checkCMD lokalize krosspython
 checkCMD lokalize lokalize
 checkCMD svn subversion
 
-echo "KDE 6 Trunk Klonlanıyor..."
+echo "KDE 6 Trunk dosyaları klonlanıyor..."
 svn co -q $svnOnEk/home/kde/trunk/l10n-kf6/tr/ kde6_tr_trunk
-echo "KDE 6 Stable Klonlanıyor..."
-svn co -q $svnOnEk/home/kde/branches/stable/l10n-kf6/tr/ kde6_tr_stable
-echo "KDE 6 Trunk Şablonları Klonlanıyor..."
+echo "KDE 5 Stable dosyaları klonlanıyor..."
+svn co -q $svnOnEk/home/kde/branches/stable/l10n-kf5/tr/ kde5_tr_stable
+echo "KDE 6 Trunk şablonları klonlanıyor..."
 svn co -q $svnOnEk/home/kde/trunk/l10n-kf6/templates templates_kde6
 
 echo "KDE 6 Lokalize Projesi oluşturuluyor..."
 # Proje dosyasını yapılandır
 echo "[General]" >> kde6_tr_trunk.lokalize
-echo "BranchDir=kde6_tr_stable" >> kde6_tr_trunk.lokalize
+echo "BranchDir=kde5_tr_stable" >> kde6_tr_trunk.lokalize
 echo "LangCode=tr" >> kde6_tr_trunk.lokalize
 echo "PoBaseDir=kde6_tr_trunk" >> kde6_tr_trunk.lokalize
 echo "PotBaseDir=templates_kde6" >> kde6_tr_trunk.lokalize
