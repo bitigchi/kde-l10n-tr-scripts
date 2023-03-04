@@ -15,12 +15,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# KDE4 Libs'i güncelle
-#echo "KDE 4 Trunk Güncelleniyor..."
-#cd kde4_tr_trunk
-#svn up
-#cd ..
-
 read -r -p "Bu işlem, KDE Deposu'ndaki tüm proje dosyalarını güncelleyecek. Devam edilsin mi [eE]/hH? " cevap
 cevap=${cevap:-e}
 case "$cevap" in
@@ -30,21 +24,18 @@ case "$cevap" in
     *)
 esac
 ssh-add
-# KDE5 trunk güncelle
-echo "KDE 5 Trunk Güncelleniyor..."
-cd kde5_tr_trunk
+echo "KDE 6 Trunk dosyaları güncelleniyor..."
+cd kde6_tr_trunk
 svn up
 cd ..
 
-# KDE5 stable güncelle
-echo "KDE 5 Stable Güncelleniyor..."
-cd kde5_tr_stable
+echo "KDE 6 Stable dosyaları güncelleniyor..."
+cd kde6_tr_stable
 svn up
 cd ..
 
-# KDE5 trunk şablonlarını güncelle
-echo "KDE 5 Trunk Şablonları Güncelleniyor..."
-cd templates_kde5
+echo "KDE 6 Trunk şablonları güncelleniyor..."
+cd templates_kde6
 svn up
 cd ..
 

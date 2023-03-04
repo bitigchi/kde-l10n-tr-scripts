@@ -15,8 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-echo "Bu betik, değiştirilmiş dosyaları KDE Deposu'na gönderecek."
-read -r -p "Bu işlem, KDE Deposu'na yazma yetkiniz yoksa başarısız olacak. Devam edilsin mi [eE]/hH? " cevap
+echo "Bu betik, değiştirilmiş dosyaları KDE depolarına işler."
+read -r -p "Bu işlem, KDE depolarına yazma yetkiniz yoksa başarısız olur. Sürdürülsün mü [eE]/hH? " cevap
 cevap=${cevap:-e}
 case "$cevap" in
     [hH]) 
@@ -27,28 +27,19 @@ esac
 
 
 ssh-add
-read -r -p "SVN deposunda görünecek mesaj: " mesaj
+read -r -p "SVN deposunda görünecek ileti: " mesaj
 mesaj="${mesaj:-turkish_translation_updates}"
 
-# KDE4 Libs'i gönder
-#echo "KDE 4 Trunk Güncelleniyor..."
-#cd kde4_tr_trunk
-#svn up
-#cd ..
-
-
-# KDE5 trunk gönder
-cd kde5_tr_trunk
-echo "KDE 5 Trunk yeni dosyalar aranıyor..."
+cd kde6_tr_trunk
+echo "KDE 6 Trunk içinde yeni dosyalar aranıyor..."
 svn add * --force
-echo "KDE 5 Trunk Gönderiliyor..."
+echo "KDE 6 Trunk değişiklikleri gönderiliyor..."
 svn ci -m "$mesaj"
 cd ..
 
-# KDE5 stable gönder
-cd kde5_tr_stable
-echo "KDE 5 Stable yeni dosyalar aranıyor..."
+cd kde6_tr_stable
+echo "KDE 6 Stable içinde yeni dosyalar aranıyor..."
 svn add * --force
-echo "KDE 5 Stable Gönderiliyor..."
+echo "KDE 6 Stable değişiklikleri gönderiliyor..."
 svn ci -m "$mesaj"
 cd ..

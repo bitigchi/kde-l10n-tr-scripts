@@ -16,7 +16,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-read -r -p "Bu işlem, proje içerisindeki tüm PO dosyalarını sistem içerisindeki dosyalar ile değiştirip, çevirileri hemen kullanmanızı sağlayacak. Devam edilsin mi [eE]/hH? " cevap
+read -r -p "Bu işlem, projedeki tüm PO dosyalarını sistemdeki dosyalarla değiştirip çevirileri hemen kullanmanızı sağlar. Sürdürülsün mü [eE]/hH? " cevap
 cevap=${cevap:-e}
 case "$cevap" in
     [hH]) 
@@ -25,15 +25,18 @@ case "$cevap" in
     *)
 esac
 
-cd kde5_tr_trunk
+cd kde6_tr_trunk
 
-echo -e "PO dosyalarını bul, her birini msgfmt ile işle ve sonuçları MO dosyası olarak adlandır...\n Bu işlem biraz zaman alabilir."
+echo -e "PO dosyalarını bul, her birini msgfmt ile işle ve sonuçları MO dosyası"
+echo -e "olarak yap... Bu işlem biraz sürebilir."
 
 for file in `find messages -name "*.po"` ; do msgfmt -o `echo $file | sed 's/\.po$/.mo/'` $file ; done
 
-echo "Şimdi dönüştürülen tüm MO dosyalarını uygulama dizinine aktar."
-echo "Bu işlem için isteniyorsa yönetici parolasını girmeniz gerekecek."
+echo "Şimdi, dönüştürülen tüm MO dosyaları uygulama dizinine aktarılacak."
+echo "Bu işlem için istenirse yönetici parolasını girmeniz gerekir."
 
 sudo find . -iname '*.mo' -exec mv '{}' /usr/share/locale/tr/LC_MESSAGES/ \;
 
-echo "İşlem tamamlandı. Bazı metinleri görmek için oturumu kapatıp yeniden açmanız gerekebilir."
+echo "İşlem tamamlandı. Bazı metinleri görmek için oturumu kapatıp yeniden açmanız"
+echo "gerekebilir. Kullanılan uygulama biçimine bağlı olarak bazı çeviriler"
+echo "görünemeyebilir."
