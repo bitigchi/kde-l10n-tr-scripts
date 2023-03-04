@@ -37,9 +37,9 @@ echo "KDE 6 Trunk değişiklikleri gönderiliyor..."
 svn ci -m "$mesaj"
 cd ..
 
-cd kde6_tr_stable
-echo "KDE 6 Stable içinde yeni dosyalar aranıyor..."
+cd kde5_tr_stable
+echo "KDE 5 Stable içinde yeni dosyalar aranıyor..."
 svn add * --force
-echo "KDE 6 Stable değişiklikleri gönderiliyor..."
+echo "KDE 5 Stable değişiklikleri gönderiliyor..."
 svn ci -m "$mesaj"
 cd ..

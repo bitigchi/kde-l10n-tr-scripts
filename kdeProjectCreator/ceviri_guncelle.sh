@@ -29,8 +29,8 @@ cd kde6_tr_trunk
 svn up
 cd ..
 
-echo "KDE 6 Stable dosyaları güncelleniyor..."
-cd kde6_tr_stable
+echo "KDE 5 Stable dosyaları güncelleniyor..."
+cd kde5_tr_stable
 svn up
 cd ..
 

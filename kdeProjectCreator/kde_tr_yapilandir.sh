@@ -108,7 +108,7 @@ esac
 echo -e "Betik, gerekli uygulamalara sahip olup olmadığınızı denetleyecek."
 echo -e "Aşağıdaki komutlar, Debian (Ubuntu, Linux Mint vs.) dışı bir sistem"
 echo -e "kullanıyorsanız çalışmaz. Bu durumda Lokalize ve SVN (Subversion)"
-echo -e "kurulumuu kendiniz yapmalısınız!\n"
+echo -e "kurulumunu kendiniz yapmalısınız!\n"
 echo -e "APT önbelleği güncelleniyor..."
 sudo apt update
 
